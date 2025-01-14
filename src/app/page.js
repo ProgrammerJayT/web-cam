@@ -9,7 +9,7 @@ const CameraCapture = () => {
   useEffect(() => {
     const constraints = {
       video: {
-        facingMode: { exact: "environment" },
+        facingMode: "environment", // Attempt to use the rear camera
       },
     };
 
@@ -23,6 +23,7 @@ const CameraCapture = () => {
       })
       .catch((error) => {
         console.error("Error accessing camera:", error);
+        alert("Unable to access the camera. Please check your permissions.");
       });
 
     return () => {
@@ -49,12 +50,18 @@ const CameraCapture = () => {
 
   return (
     <div>
-      <h1>Capture Image</h1>
-      <video ref={videoRef} autoPlay id="player" style={{ width: "100%" }} />
+      <h1>Live Camera Stream</h1>
+      <video
+        ref={videoRef}
+        autoPlay
+        playsInline
+        id="player"
+        style={{ width: "100%" }}
+      />
       <button onClick={captureImage} id="capture">
         Capture
       </button>
-      <canvas ref={canvasRef} id="canvas" width="320" height="240" />
+      <canvas ref={canvasRef} id="canvas" style={{ display: "none" }} />
     </div>
   );
 };
