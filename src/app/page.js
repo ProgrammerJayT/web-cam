@@ -8,12 +8,9 @@ const CameraCapture = () => {
 
   useEffect(() => {
     const constraints = {
-      video: {
-        facingMode: "environment", // Attempt to use the rear camera
-      },
+      video: { facingMode: "environment" }, // Use the rear camera if available
     };
 
-    // Access the user's camera
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then((stream) => {
@@ -22,12 +19,17 @@ const CameraCapture = () => {
         }
       })
       .catch((error) => {
+        if (error.name === "NotAllowedError") {
+          alert("Camera access denied. Please enable camera permissions.");
+        } else if (error.name === "NotFoundError") {
+          alert("No camera found on this device.");
+        } else {
+          alert("An unexpected error occurred.");
+        }
         console.error("Error accessing camera:", error);
-        alert("Unable to access the camera. Please check your permissions.");
       });
 
     return () => {
-      // Cleanup the stream when the component unmounts
       if (videoRef.current && videoRef.current.srcObject) {
         const tracks = videoRef.current.srcObject.getTracks();
         tracks.forEach((track) => track.stop());
@@ -45,6 +47,9 @@ const CameraCapture = () => {
 
       // Draw the video frame to the canvas
       context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
+      // Make the canvas visible to preview the image
+      canvasRef.current.style.display = "block";
     }
   };
 
@@ -61,7 +66,15 @@ const CameraCapture = () => {
       <button onClick={captureImage} id="capture">
         Capture
       </button>
-      <canvas ref={canvasRef} id="canvas" style={{ display: "none" }} />
+      <canvas
+        ref={canvasRef}
+        id="canvas"
+        style={{
+          display: "none", // Hidden by default
+          marginTop: "20px",
+          border: "1px solid #ccc",
+        }}
+      />
     </div>
   );
 };
