@@ -7,7 +7,11 @@ const CameraCapture = () => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    const constraints = { video: true };
+    const constraints = {
+      video: {
+        facingMode: { exact: "environment" },
+      },
+    };
 
     // Access the user's camera
     navigator.mediaDevices
