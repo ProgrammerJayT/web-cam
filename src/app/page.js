@@ -6,7 +6,7 @@ const CameraCapture = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [capturedImages, setCapturedImages] = useState([]);
-  
+
   useEffect(() => {
     const constraints = {
       video: { facingMode: "environment" },
@@ -59,6 +59,11 @@ const CameraCapture = () => {
           autoPlay
           id="player"
           className="w-1/2 mb-4 rounded shadow-lg"
+          onLoadedMetadata={() => {
+            if (videoRef.current) {
+              videoRef.current.play();
+            }
+          }}
         />
         <canvas
           ref={canvasRef}
