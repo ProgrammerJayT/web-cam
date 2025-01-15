@@ -5,12 +5,10 @@ import { useEffect, useRef, useState } from "react";
 const CameraCapture = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [capturedImages, setCapturedImages] = useState([]);
+  const [capturedImages, setCapturedImages] = useState([]); // State to store captured images
 
   useEffect(() => {
-    const constraints = {
-      video: { facingMode: "environment" },
-    };
+    const constraints = { video: true };
 
     // Access the user's camera
     navigator.mediaDevices
@@ -59,11 +57,6 @@ const CameraCapture = () => {
           autoPlay
           id="player"
           className="w-1/2 mb-4 rounded shadow-lg"
-          onLoadedMetadata={() => {
-            if (videoRef.current) {
-              videoRef.current.play();
-            }
-          }}
         />
         <canvas
           ref={canvasRef}
