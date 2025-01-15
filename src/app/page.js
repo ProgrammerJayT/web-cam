@@ -53,7 +53,7 @@ const CameraCapture = () => {
       const imageData = canvasRef.current.toDataURL("image/png");
 
       // Add the captured image to the array of images
-      setCapturedImages((prevImages) => [...prevImages, imageData]);
+      setCapturedImages((prevImages) => [imageData, ...prevImages]);
 
       // Hide the canvas after capturing the image
       canvasRef.current.style.display = "none";
