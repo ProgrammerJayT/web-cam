@@ -135,13 +135,15 @@ const CameraCapture = () => {
           ))}
         </div>
 
-        <button
-          onClick={captureImage}
-          id="capture"
-          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-md hover:bg-blue-600"
-        >
-          Capture
-        </button>
+        <div className="flex align-center justify-center my-5 pb-5">
+          <button
+            onClick={captureImage}
+            id="capture"
+            className="bg-blue-500 text-white font-semibold mt-5 py-2 px-6 rounded-full shadow-md hover:bg-blue-600"
+          >
+            Capture
+          </button>
+        </div>
 
         <canvas
           ref={canvasRef}
