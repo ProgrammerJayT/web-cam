@@ -127,10 +127,6 @@ const CameraCapture = () => {
                 alt={`Captured ${index}`}
                 className="object-cover w-full h-full"
               />
-              {/* Display description below the image */}
-              <div className="mt-2 text-center text-sm text-gray-600">
-                {item.description}
-              </div>
             </div>
           ))}
         </div>
