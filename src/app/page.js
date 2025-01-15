@@ -5,10 +5,12 @@ import { useEffect, useRef, useState } from "react";
 const CameraCapture = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [capturedImages, setCapturedImages] = useState([]); // State to store captured images
-
+  const [capturedImages, setCapturedImages] = useState([]);
+  
   useEffect(() => {
-    const constraints = { video: true };
+    const constraints = {
+      video: { facingMode: "environment" },
+    };
 
     // Access the user's camera
     navigator.mediaDevices
