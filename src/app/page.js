@@ -62,11 +62,11 @@ const CameraCapture = () => {
 
   return (
     <div className="relative h-screen">
-      <h1 className="text-center text-2xl font-semibold my-4">
+      {/* <h1 className="text-center text-2xl font-semibold my-4">
         Evidence capture
-      </h1>
+      </h1> */}
 
-      <div className="mx-5 bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+      <div className="mx-5 mt-5 bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
         <video
           ref={videoRef}
           autoPlay
@@ -77,11 +77,11 @@ const CameraCapture = () => {
       </div>
 
       {/* Horizontal Scroll for Captured Images */}
-      <div className="flex overflow-x-auto mt-4 py-2 space-x-4 px-4">
+      <div className="flex overflow-x-auto mt-4 py-2 space-x-2.5 px-5">
         {capturedImages.map((image, index) => (
           <div
             key={index}
-            className="flex-shrink-0 w-32 h-32 border border-gray-300 rounded-lg overflow-hidden"
+            className="flex-shrink-0 w-20 h-20 border border-gray-300 rounded-lg overflow-hidden"
           >
             <img
               src={image}
