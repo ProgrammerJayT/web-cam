@@ -6,6 +6,7 @@ const CameraCapture = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [capturedImages, setCapturedImages] = useState([]);
+  const [description, setDescription] = useState(""); // New state for description
 
   useEffect(() => {
     const constraints = {
@@ -52,21 +53,27 @@ const CameraCapture = () => {
       // Get the captured image data as a base64 string
       const imageData = canvasRef.current.toDataURL("image/png");
 
-      // Add the captured image to the array of images
-      setCapturedImages((prevImages) => [imageData, ...prevImages]);
+      // Add the captured image with its description to the array of images
+      setCapturedImages((prevImages) => [
+        { image: imageData, description },
+        ...prevImages,
+      ]);
+
+      // Clear the description after capturing
+      setDescription("");
 
       // Hide the canvas after capturing the image
       canvasRef.current.style.display = "none";
     }
   };
 
+  useEffect(() => {
+    console.log("Captured Images", capturedImages);
+  }, [capturedImages]);
+
   return (
     <>
       <div className="h-screen">
-        {/* <h1 className="text-center text-2xl font-semibold my-4">
-        Evidence capture
-      </h1> */}
-
         <div className="mx-5 mt-5 bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
           <video
             ref={videoRef}
@@ -77,14 +84,24 @@ const CameraCapture = () => {
           />
         </div>
 
+        {/* Description input */}
+        <div className="mx-5 mt-5">
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)} // Update description as user types
+            className="w-full px-3 py-1 border border-gray-300 rounded-lg resize-none"
+            rows="5"
+            placeholder="Enter description here..."
+          ></textarea>
+        </div>
+
         {/* Horizontal Scroll for Captured Images */}
-        <div className="flex overflow-x-auto mt-5 py-2 space-x-6 px-5 custom-scroll">
-          {capturedImages.map((image, index) => (
+        <div className="flex overflow-x-auto mt-2 py-2 space-x-6 px-5 custom-scroll">
+          {capturedImages.map((item, index) => (
             <div
               key={index}
               className="flex-shrink-0 w-20 h-20 border border-gray-300 rounded-lg overflow-visible relative"
             >
-              {/* SVG centered and overlapping slightly above the image */}
               <div className="absolute top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
                 <button
                   onClick={() => {}} // Callback function when SVG is clicked
@@ -106,22 +123,25 @@ const CameraCapture = () => {
               </div>
 
               <img
-                src={image}
+                src={item.image}
                 alt={`Captured ${index}`}
                 className="object-cover w-full h-full"
               />
+              {/* Display description below the image */}
+              <div className="mt-2 text-center text-sm text-gray-600">
+                {item.description}
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Capture Button */}
-        {/* <button
-        onClick={captureImage}
-        id="capture"
-        className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-md hover:bg-blue-600"
-      >
-        Capture
-      </button> */}
+        <button
+          onClick={captureImage}
+          id="capture"
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-md hover:bg-blue-600"
+        >
+          Capture
+        </button>
 
         <canvas
           ref={canvasRef}
@@ -133,13 +153,6 @@ const CameraCapture = () => {
           }}
         />
       </div>
-      <button
-        onClick={captureImage}
-        id="capture"
-        className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-md hover:bg-blue-600"
-      >
-        Capture
-      </button>
     </>
   );
 };
