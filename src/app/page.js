@@ -63,16 +63,18 @@ const CameraCapture = () => {
   return (
     <div className="relative h-screen">
       <h1 className="text-center text-2xl font-semibold my-4">
-        Live Camera Stream
+        Evidence capture
       </h1>
 
-      <video
-        ref={videoRef}
-        autoPlay
-        playsInline
-        id="player"
-        className="w-full h-96 object-cover"
-      />
+      <div className="mx-5 bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+        <video
+          ref={videoRef}
+          autoPlay
+          playsInline
+          id="player"
+          className="w-full h-96 object-cover rounded-lg"
+        />
+      </div>
 
       {/* Horizontal Scroll for Captured Images */}
       <div className="flex overflow-x-auto mt-4 py-2 space-x-4 px-4">
